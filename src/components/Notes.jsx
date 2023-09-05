@@ -6,15 +6,13 @@ const Notes = () => {
   const [newNote, setNewNote] = useState("");
   const [newDescript, setNewDescript] = useState("");
 
-  // Cargar notas desde el localStorage al montar el componente
+  //para guardar en el localStorage
   useEffect(() => {
-    const storedNotes = localStorage.getItem("notes");
-    if (storedNotes) {
-      setNotes(JSON.parse(storedNotes));
-    }
-  }, []);
+    const notesJson = JSON.stringify(notes);
+    localStorage.setItem("notes", notesJson);
+  }, [notes]);
 
-  // Guardar notas en el localStorage cuando cambian
+  //Para mostrar lo guardado en el localStorage
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
