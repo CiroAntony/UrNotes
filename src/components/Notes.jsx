@@ -11,6 +11,14 @@ const Notes = () => {
     localStorage.setItem("notes", notesJson);
   }, [notes]);
 
+  //Para mostrar lo guardado en el localStorage
+  useEffect(() => {
+    const storedNotes = localStorage.getItem("notes");
+    if (storedNotes) {
+      setNotes(JSON.parse(storedNotes));
+    }
+  }, []);
+
   const handleNewNote = (e) => {
     e.preventDefault();
     if (newNote.trim() && newDescript.trim() !== "") {
