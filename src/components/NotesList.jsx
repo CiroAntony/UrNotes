@@ -9,10 +9,10 @@ const NotesList = ({ notes, setNotes }) => {
     setNotes(deleteCardNote);
   };
   return (
-    <div className="notes-list flex justify-center text-center gap-8 flex-wrap">
+    <div className="notes-list flex justify-center gap-8 flex-wrap text-white">
       {notes.map((note, index) => (
         <div
-          className="card border-[1px] w-[300px] bg-[#c87bf2] rounded-2xl"
+          className="card border-[1px] w-[350px] bg-[#d19d10] rounded-2xl"
           key={index}
         >
           <div className="flex justify-end border-nonej">
@@ -22,12 +22,12 @@ const NotesList = ({ notes, setNotes }) => {
             />
           </div>
 
-          <div className="note-descript mt-[-26jpx]">
-            <h1 className="bg-[#c87bf2] font-bold text-lg pr-2 pl-2 rounded-xl">
+          <div className="note-descript mt-[-26px]">
+            <h1 className="bg-[#d19d10] text-center font-bold text-lg pr-2 pl-2 rounded-xl">
               {note.newNote}
             </h1>
-            <div className="bg-black w-full h-[1px] mt-2 mb-2"></div>
-            <p className="text-[18px] pr-2 pl-2">{note.newDescript}</p>
+            <div className="bg-white w-full h-[1px] mt-2 mb-2"></div>
+            <p className="text-[18px] pr-2 pl-2 pb-2">{note.newDescript}</p>
           </div>
         </div>
       ))}
