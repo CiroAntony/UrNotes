@@ -8,17 +8,6 @@ const Notes = () => {
   const [newDescript, setNewDescript] = useState("");
   const [showForm, setShowForm] = useState(false);
 
-  //para guardar en el localStorage
-  useEffect(() => {
-    const notesJson = JSON.stringify(notes);
-    localStorage.setItem("notes", notesJson);
-  }, [notes]);
-
-  //Para mostrar lo guardado en el localStorage
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
-
   const handleNewNote = (e) => {
     e.preventDefault();
     if (newNote.trim() && newDescript.trim() !== "") {
@@ -29,6 +18,10 @@ const Notes = () => {
       setNewDescript("");
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   const handleShowForm = () => {
     setShowForm(!showForm);
@@ -50,7 +43,7 @@ const Notes = () => {
         <div className="delete-container flex justify-end mt-[-20px]">
           <TiDeleteOutline
             onClick={handleShowForm}
-            className="text-[28px] text-[#2c2c2c] hover:text-[#ff0000] cursor-pointer"
+            className="text-[28px] text-white hover:text-green-900 cursor-pointer"
           />
         </div>
         <h2 className="text-center text-lg font-semibold mt-[-20px]">
