@@ -8,6 +8,17 @@ const Notes = () => {
   const [newDescript, setNewDescript] = useState("");
   const [showForm, setShowForm] = useState(false);
 
+  // Cargar notas almacenadas en localStorage al inicio
+  useEffect(() => {
+    const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    setNotes(storedNotes);
+  }, []);
+
+  // Actualizar localStorage cuando cambien las notas
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
   const handleNewNote = (e) => {
     e.preventDefault();
     if (newNote.trim() && newDescript.trim() !== "") {
