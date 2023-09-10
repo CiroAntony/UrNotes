@@ -9,7 +9,7 @@ const NotesList = ({ notes, setNotes }) => {
     setNotes(deleteCardNote);
   };
   return (
-    <div className="notes-list flex justify-center gap-8 flex-wrap text-white">
+    <div className="notes-list flex justify-center gap-8 flex-wrap text-white flex-row-reverse">
       {notes.map((note, index) => (
         <div
           className="card border-[1px] w-[350px] bg-[#d19d10] rounded-2xl"

@@ -7,7 +7,7 @@ function App() {
     <>
       <header className="flex justify-center">
         <div className="main-header py-4 px-4 pr-9 pl-9 mt-4 mb-4 font-bold text-white font bg-[#d19d10] rounded-2xl text-[22px] text-center">
-          UrNotes
+          Notas
         </div>
       </header>
       <Notes />

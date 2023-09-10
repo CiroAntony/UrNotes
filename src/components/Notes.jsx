@@ -58,7 +58,7 @@ const Notes = () => {
           />
         </div>
         <h2 className="text-center text-lg font-semibold mt-[-20px]">
-          Ingrese el titulo y descripcion de su nota
+          Ingrese el titulo y descripción de su nota
         </h2>
         <input
           type="text"
@@ -71,7 +71,7 @@ const Notes = () => {
         <textarea
           value={newDescript}
           onChange={(e) => setNewDescript(e.target.value)}
-          placeholder="Ingrese la descripciòn"
+          placeholder="Ingrese la descripción"
           className="w-[400px] h-[200px] p-2 rounded-xl outline-none bg-[#2c2c2c]"
         />
         <button
