@@ -48,16 +48,18 @@ const Notes = () => {
     setEditIndex(null);
   };
 
+  const handleNewNoteClick = () => {
+    if (!isEditing) {
+      setEditedNote({ newNote: "", newDescript: "" });
+    }
+    setIsEditing(!isEditing);
+    setEditIndex(null);
+  };
+
   return (
     <>
       <button
-        onClick={() => {
-          if (!isEditing) {
-            setEditedNote({ newNote: "", newDescript: "" });
-          }
-          setIsEditing(!isEditing);
-          setEditIndex(null);
-        }}
+        onClick={handleNewNoteClick}
         className="bg-[#d19d10] p-8 py-2 rounded-2xl ml-12 text-white"
       >
         {isEditing ? "Cancelar" : "Nuevo"}
@@ -74,7 +76,7 @@ const Notes = () => {
           />
         </div>
         <h2 className="text-center text-lg font-semibold mt-[-20px]">
-          {isEditing ? "Editar la nota" : "Nueva Nota"}
+          Ingresa o modifica tu nota
         </h2>
         <input
           type="text"
