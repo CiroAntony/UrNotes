@@ -60,7 +60,7 @@ const Notes = () => {
     <>
       <button
         onClick={handleNewNoteClick}
-        className="bg-[#d19d10] p-8 py-2 rounded-2xl ml-12 text-white"
+        className="bg-[#d19d10] p-8 py-2 rounded-2xl ml-12 text-white m-6"
       >
         {isEditing ? "Cancelar" : "Nuevo"}
       </button>
