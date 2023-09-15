@@ -4,85 +4,108 @@ import { TiDeleteOutline } from "react-icons/ti";
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState("");
-  const [newDescript, setNewDescript] = useState("");
-  const [showForm, setShowForm] = useState(false);
+  const [editedNote, setEditedNote] = useState({
+    newNote: "",
+    newDescript: "",
+  });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
 
-  // Cargar notas almacenadas en localStorage al inicio
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
     setNotes(storedNotes);
   }, []);
 
-  // Actualizar localStorage cuando cambien las notas
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
 
-  const handleNewNote = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (newNote.trim() && newDescript.trim() !== "") {
-      const inputsNote = { newNote, newDescript };
-      setNotes([...notes, inputsNote]);
-
-      setNewNote("");
-      setNewDescript("");
+    if (editedNote.newNote.trim() && editedNote.newDescript.trim() !== "") {
+      const updatedNotes = [...notes];
+      if (isEditing && editIndex !== null) {
+        updatedNotes[editIndex] = editedNote;
+      } else {
+        updatedNotes.push(editedNote);
+      }
+      setNotes(updatedNotes);
+      setEditedNote({ newNote: "", newDescript: "" });
+      setIsEditing(false);
+      setEditIndex(null);
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+  const handleEditNote = (index) => {
+    setEditedNote(notes[index]);
+    setIsEditing(true);
+    setEditIndex(index);
+  };
 
-  const handleShowForm = () => {
-    setShowForm(!showForm);
+  const handleCancelEdit = () => {
+    setEditedNote({ newNote: "", newDescript: "" });
+    setIsEditing(false);
+    setEditIndex(null);
   };
 
   return (
     <>
       <button
-        onClick={handleShowForm}
+        onClick={() => {
+          if (!isEditing) {
+            setEditedNote({ newNote: "", newDescript: "" });
+          }
+          setIsEditing(!isEditing);
+          setEditIndex(null);
+        }}
         className="bg-[#d19d10] p-8 py-2 rounded-2xl ml-12 text-white"
       >
-        Nuevo
+        {isEditing ? "Cancelar" : "Nuevo"}
       </button>
       <form
-        onSubmit={handleNewNote}
+        onSubmit={handleFormSubmit}
         className={`bg-[#d19d10] pt-8 p-4 pb-8 flex flex-col gap-4 absolute left-[38.9%]
-        top-[20%] rounded-2xl text-white  ${showForm ? "block" : "hidden"}`}
+        top-[20%] rounded-2xl text-white  ${isEditing ? "block" : "hidden"}`}
       >
         <div className="delete-container flex justify-end mt-[-20px]">
           <TiDeleteOutline
-            onClick={handleShowForm}
+            onClick={handleCancelEdit}
             className="text-[28px] text-white hover:text-green-900 cursor-pointer"
           />
         </div>
         <h2 className="text-center text-lg font-semibold mt-[-20px]">
-          Ingrese el titulo y descripción de su nota
+          {isEditing ? "Editar la nota" : "Nueva Nota"}
         </h2>
         <input
           type="text"
-          value={newNote}
-          onChange={(e) => setNewNote(e.target.value)}
-          placeholder="Ingrese el titulo"
+          value={editedNote.newNote}
+          onChange={(e) =>
+            setEditedNote({ ...editedNote, newNote: e.target.value })
+          }
+          placeholder="Ingrese el título"
           className="p-2 w-[400px] outline-none rounded-2xl bg-[#2c2c2c]"
         />
-
         <textarea
-          value={newDescript}
-          onChange={(e) => setNewDescript(e.target.value)}
+          value={editedNote.newDescript}
+          onChange={(e) =>
+            setEditedNote({ ...editedNote, newDescript: e.target.value })
+          }
           placeholder="Ingrese la descripción"
           className="w-[400px] h-[200px] p-2 rounded-xl outline-none bg-[#2c2c2c]"
         />
         <button
           type="submit"
-          onClick={handleShowForm}
-          className="border[2px] border-[#2c2c2c] border-2 rounded-2xl p-2 hover:bg-[#2c2c2c] duration-1000"
+          className="border-2 border-[#2c2c2c] rounded-2xl p-2 hover:bg-[#2c2c2c] duration-1000"
         >
-          Guarda nota
+          {isEditing ? "Guardar nota" : "Crear nota"}
         </button>
       </form>
-      <NotesList notes={notes} setNotes={setNotes} />
+      <NotesList
+        notes={notes}
+        setNotes={setNotes}
+        handleEditNote={handleEditNote}
+        isEditing={isEditing}
+      />
     </>
   );
 };
